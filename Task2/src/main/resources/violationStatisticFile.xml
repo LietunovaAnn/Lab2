@@ -1,0 +1,18 @@
+<ArrayList>
+    <item>
+        <type>Cell_Phone</type>
+        <fineAmount>2800.3</fineAmount>
+    </item>
+    <item>
+        <type>Tailgating</type>
+        <fineAmount>2743.2</fineAmount>
+    </item>
+    <item>
+        <type>Speeding</type>
+        <fineAmount>1996.0</fineAmount>
+    </item>
+    <item>
+        <type>Right-of-Way</type>
+        <fineAmount>1376.1</fineAmount>
+    </item>
+</ArrayList>

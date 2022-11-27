@@ -1,0 +1,30 @@
+[
+  {
+    "date_time": "2018-06-05 15:39:03",
+    "first_name": "Ivan",
+    "last_name": "Ivanov",
+    "type": "Speeding",
+    "fine_amount": 552.00
+  },
+  {
+    "date_time": "2018-07-05 15:39:03",
+    "first_name": "Ivan",
+    "last_name": "Ivanov",
+    "type": "Right-of-Way",
+    "fine_amount": 366.80
+  },
+  {
+    "date_time": "2018-08-05 15:39:03",
+    "first_name": "Ivan",
+    "last_name": "Ivanov",
+    "type": "Tailgating",
+    "fine_amount": 340.00
+  },
+  {
+    "date_time": "2018-05-05 15:39:03",
+    "first_name": "Ivan",
+    "last_name": "Ivanov",
+    "type": "Cell_Phone",
+    "fine_amount": 1115.00
+  }
+]

@@ -1,6 +1,9 @@
 package org.example;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,7 +17,6 @@ public class Parser {
             resultFile.delete();
         }
     }
-
     public static void parseXML() {
         try (FileInputStream inputStream = new FileInputStream(inputFile);
              Scanner scanner = new Scanner(inputStream, "UTF-8").useDelimiter("/>")) {
@@ -26,9 +28,7 @@ public class Parser {
             e.printStackTrace();
         }
     }
-
     public static String joinNameWithSurname(String personEntity) {
-
         Pattern logPatternName = Pattern.compile(
                 "(\\sname[^=]*=[^\"]*\"[^\"]*\")");
         Pattern logPatternSurname = Pattern.compile(
@@ -56,16 +56,12 @@ public class Parser {
         //for person entity without name or surname
         return personEntity + "/>";
     }
-
-
     public static void writeToResFile(String xmlSource) {
         try (FileWriter fw = new FileWriter(resultFile, true)) {
             fw.write(xmlSource);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
 }
 
