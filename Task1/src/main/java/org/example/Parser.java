@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class Parser {
     private static final File inputFile = new File("Task1/src/main/resources/persons.xml");
-    private static final File resultFile = new File("Task1/src/main/resources/personsNewFile.xml");
+    private static final File resultFile = new File("Task1/src/main/resources/personsNewFile2.xml");
 
     public static void clearResultFile() {
         if (resultFile.exists()) {
@@ -28,7 +28,8 @@ public class Parser {
             e.printStackTrace();
         }
     }
-    public static String joinNameWithSurname(String personEntity) {
+
+    private static String joinNameWithSurname(String personEntity) {
         Pattern logPatternName = Pattern.compile(
                 "(\\sname[^=]*=[^\"]*\"[^\"]*\")");
         Pattern logPatternSurname = Pattern.compile(
@@ -56,7 +57,8 @@ public class Parser {
         //for person entity without name or surname
         return personEntity + "/>";
     }
-    public static void writeToResFile(String xmlSource) {
+
+    private static void writeToResFile(String xmlSource) {
         try (FileWriter fw = new FileWriter(resultFile, true)) {
             fw.write(xmlSource);
         } catch (IOException e) {

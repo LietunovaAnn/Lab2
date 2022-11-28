@@ -28,14 +28,14 @@ public class Parser {
         }
     }
 
-    public static String getValidJson(String violationEntity) {
+    private static String getValidJson(String violationEntity) {
         violationEntity = violationEntity.replace("[", "");
         violationEntity = violationEntity.replace("]\r\n}", "");
         return violationEntity;
     }
 
 
-    public static void saveViolationStatistic(Violation violation) {
+    private static void saveViolationStatistic(Violation violation) {
         String type = violation.getType();
         Double fineAmount = violation.getFineAmount();
         if (violationStatisticMap.containsKey(type)) {
