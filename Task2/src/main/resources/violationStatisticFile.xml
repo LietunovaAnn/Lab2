@@ -1,18 +1,18 @@
-<ArrayList>
-    <item>
+<ViolationsStatistic>
+    <violation>
         <type>Cell_Phone</type>
         <fineAmount>2800.3</fineAmount>
-    </item>
-    <item>
+    </violation>
+    <violation>
         <type>Tailgating</type>
         <fineAmount>2743.2</fineAmount>
-    </item>
-    <item>
+    </violation>
+    <violation>
         <type>Speeding</type>
         <fineAmount>1996.0</fineAmount>
-    </item>
-    <item>
+    </violation>
+    <violation>
         <type>Right-of-Way</type>
         <fineAmount>1376.1</fineAmount>
-    </item>
-</ArrayList>
+    </violation>
+</ViolationsStatistic>

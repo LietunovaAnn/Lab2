@@ -1,41 +1,19 @@
 package org.example;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.google.gson.Gson;
 import org.example.entities.Violation;
-import org.example.entities.ViolationStatistic;
+import org.example.entities.ViolationsStatisticList;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
 
 public class Parser {
     private static final File resultFile = new File("Task2/src/main/resources/violationStatisticFile.xml");
-    private static final Map<String, Double> violationStatisticMap = new HashMap<>();
 
-
-    public static void parseViolationFile(File inputFile) {
-        try (FileInputStream inputStream = new FileInputStream(inputFile);
-             Scanner scanner = new Scanner(inputStream, "UTF-8").useDelimiter("},")) {
-            while (scanner.hasNextLine()) {
-                String violationEntity = getValidJson(scanner.next() + "}");
-                Violation violation = new Gson().fromJson(violationEntity, Violation.class);
-                saveViolationStatistic(violation);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static String getValidJson(String violationEntity) {
-        violationEntity = violationEntity.replace("[", "");
-        violationEntity = violationEntity.replace("]\r\n}", "");
-        return violationEntity;
-    }
-
-
-    private static void saveViolationStatistic(Violation violation) {
+    private static void saveViolationStatistic(Violation violation, Map<String, Double> violationStatisticMap) {
         String type = violation.getType();
         Double fineAmount = violation.getFineAmount();
         if (violationStatisticMap.containsKey(type)) {
@@ -45,16 +23,18 @@ public class Parser {
         }
     }
 
-    public static List<ViolationStatistic> getSortedViolationStatisticList() {
-        List<ViolationStatistic> violationStatisticList = new ArrayList<>();
+    public static ViolationsStatisticList getSortedViolationStatisticList(Map<String, Double> violationStatisticMap) {
+        ViolationsStatisticList violations = new ViolationsStatisticList();
+        List<Violation> violationStatisticList = new ArrayList<>();
         violationStatisticMap.entrySet()
                 .stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                .forEachOrdered(x -> violationStatisticList.add(new ViolationStatistic(x.getKey(), x.getValue())));
-        return violationStatisticList;
+                .forEachOrdered(x -> violationStatisticList.add(new Violation(x.getKey(), x.getValue())));
+        violations.setViolationStatisticList(violationStatisticList);
+        return violations;
     }
 
-    public static void parseListToXml(List<ViolationStatistic> violationStatisticList) {
+    public static void parseListToXml(ViolationsStatisticList violationStatisticList) {
         XmlMapper xmlMapper = new XmlMapper();
         try {
             xmlMapper.writeValue(resultFile, violationStatisticList);
@@ -63,4 +43,31 @@ public class Parser {
         }
     }
 
+    public static void parseAndMakeStatistic(File inputFile, Map<String, Double> violationStatisticMap) {
+        JsonFactory jsonFactory = new JsonFactory();
+        try {
+            Violation violation = new Violation();
+            JsonParser jParser = jsonFactory.createParser(inputFile);
+            while (jParser.nextToken() != null) {
+                String field_name = jParser.getCurrentName();
+                if ("type".equals(field_name)) {
+                    jParser.nextToken();
+                    violation.setType(jParser.getText());
+                }
+                if ("fine_amount".equals(field_name)) {
+                    jParser.nextToken();
+                    violation.setFineAmount(jParser.getDoubleValue());
+                }
+                if (violation.getType() != null && violation.getFineAmount() != null) {
+                    saveViolationStatistic(violation, violationStatisticMap);
+                    violation.setFineAmount(null);
+                    violation.setType(null);
+                }
+
+            }
+            jParser.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -1,16 +1,14 @@
 package org.example.entities;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Violation {
-    @SerializedName("date_time")
-    private String dateTime;
-    @SerializedName("first_name")
-    private String firstName;
-    @SerializedName("last_name")
-    private String lastName;
     @SerializedName("type")
     private String type;
     @SerializedName("fine_amount")
