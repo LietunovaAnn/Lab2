@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class Parser {
     private static final File inputFile = new File("Task1/src/main/resources/persons.xml");
-    private static final File resultFile = new File("Task1/src/main/resources/personsNewFile2.xml");
+    private static final File resultFile = new File("Task1/src/main/resources/personsNewFile22.xml");
 
     public static void clearResultFile() {
         if (resultFile.exists()) {
